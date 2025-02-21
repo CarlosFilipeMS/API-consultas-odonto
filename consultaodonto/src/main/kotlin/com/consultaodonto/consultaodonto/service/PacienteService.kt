@@ -4,8 +4,10 @@ import com.consultaodonto.consultaodonto.dto.PacienteDTO
 import com.consultaodonto.consultaodonto.model.Paciente
 import com.consultaodonto.consultaodonto.repository.PacienteRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDate
 import java.util.*
 
@@ -68,4 +70,24 @@ class PacienteService(
     fun deletarPaciente(id: UUID) {
         pacienteRepository.deleteById(id)
     }
+
+    fun buscarPacientePorNome(nome: String): List<PacienteDTO> {
+        val pacientes = pacienteRepository.findByNomeContainingIgnoreCase(nome)  // Busca parcial insensível a maiúsculas/minúsculas
+        if (pacientes.isEmpty()) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum paciente encontrado com o nome: $nome")
+        }
+        return pacientes.map { it.toDTO() }
+    }
+
+    fun buscarPorCPF(cpf: String): PacienteDTO {
+        val cpfSanitizado = cpf.replace("[^0-9]".toRegex(), "")
+        println("Buscando paciente com CPF: $cpfSanitizado")  // Adicione o log para ver o CPF que está sendo buscado
+        val paciente = pacienteRepository.findByCpf(cpfSanitizado)
+        if (paciente == null) {
+            throw IllegalArgumentException("Paciente não encontrado com o CPF: $cpfSanitizado")
+        }
+        return paciente.toDTO()
+    }
+
+
 }

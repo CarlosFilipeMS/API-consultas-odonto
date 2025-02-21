@@ -8,4 +8,5 @@ import java.util.UUID
 @Repository
 interface PacienteRepository : JpaRepository<Paciente, UUID> {
     fun findByCpf(cpf: String): Paciente?
+    fun findByNomeContainingIgnoreCase(nome: String): List<Paciente>
 }

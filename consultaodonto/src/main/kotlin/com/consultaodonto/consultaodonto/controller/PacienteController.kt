@@ -2,8 +2,10 @@ package com.consultaodonto.consultaodonto.controller
 
 import com.consultaodonto.consultaodonto.dto.PacienteDTO
 import com.consultaodonto.consultaodonto.service.PacienteService
+import jakarta.websocket.server.PathParam
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -28,6 +30,21 @@ class PacienteController(
     @GetMapping("/{id}")
     fun buscarPacientePorId(@PathVariable id: String): PacienteDTO {
         return pacienteService.buscarPacientePorId(UUID.fromString(id))
+    }
+
+    @GetMapping("/nome/{nome}") // Usa PathVariable para evitar conflitos
+    fun buscarPacientePorNome(@PathVariable nome: String): List<PacienteDTO> {
+        return pacienteService.buscarPacientePorNome(nome)
+    }
+
+    @GetMapping("/cpf")
+    fun buscarPorCPF(@RequestParam cpf: String): ResponseEntity<PacienteDTO> {
+        return try {
+            val pacienteDTO = pacienteService.buscarPorCPF(cpf)
+            ResponseEntity.ok(pacienteDTO)
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+        }
     }
 
     @GetMapping

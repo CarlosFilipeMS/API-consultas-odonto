@@ -1,15 +1,13 @@
 package com.consultaodonto.consultaodonto.model
 
 import com.consultaodonto.consultaodonto.dto.PacienteDTO
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.GenerationType
+import jakarta.persistence.*
 import java.time.LocalDate
 import java.util.*
 
 @Entity
+@Table(name = "paciente")
+
 data class Paciente(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // Usando geração automática do UUID
