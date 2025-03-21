@@ -25,8 +25,17 @@ data class Consulta(
 ) {
     fun toDTO() = ConsultaDTO(
         id = this.id,
-        pacienteId = this.paciente.id ?: UUID.randomUUID(),
-        dentistaId = this.dentista.id ?: UUID.randomUUID(),
+        pacienteCpf = this.paciente.cpf,
+        pacienteNome = this.paciente.nome, // Adicionando o nome do paciente
+        dentistaId = this.dentista.id!!,
+        dentistaNome = this.dentista.nome, // Adicionando o nome do dentista
         dataHora = this.dataHora
     )
+
+
+
+    fun atualizar(dataHora: LocalDateTime) =
+        this.copy(
+            dataHora = dataHora
+        )
 }

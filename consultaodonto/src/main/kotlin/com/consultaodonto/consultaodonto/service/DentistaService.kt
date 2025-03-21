@@ -35,6 +35,12 @@ class DentistaService(
         return dentistas.map {it.toDTO()}
     }
 
+    fun buscarDentistaPorId(id: UUID): DentistaDTO{
+        val dentista = dentistaRepository.findById(id).orElseThrow{
+            ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum dentista encontrado com o id $id")
+        }
+        return dentista.toDTO()
+    }
     fun buscarDentistaPorNome(nome: String): List<DentistaDTO> {
         val dentistas = dentistaRepository.findByNomeContainingIgnoreCase(nome)
         if(dentistas.isEmpty()) {

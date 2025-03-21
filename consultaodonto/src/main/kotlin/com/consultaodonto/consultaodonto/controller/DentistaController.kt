@@ -3,17 +3,10 @@ package com.consultaodonto.consultaodonto.controller
 import com.consultaodonto.consultaodonto.dto.DentistaDTO
 import com.consultaodonto.consultaodonto.service.DentistaService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
+@CrossOrigin(origins = ["https://frontend-consultas-odonto.vercel.app/"]) // Permite chamadas do frontend
 @RestController
 @RequestMapping("/dentistas")
 class DentistaController(
@@ -27,6 +20,11 @@ class DentistaController(
     @GetMapping
     fun listarDentistas(): List<DentistaDTO>{
         return dentistaService.listarDentistas()
+    }
+
+    @GetMapping("/{id}")
+    fun buscarDentistaPorId(@PathVariable id: String): DentistaDTO{
+        return dentistaService.buscarDentistaPorId(UUID.fromString(id))
     }
 
     @GetMapping("/nome/{nome}")

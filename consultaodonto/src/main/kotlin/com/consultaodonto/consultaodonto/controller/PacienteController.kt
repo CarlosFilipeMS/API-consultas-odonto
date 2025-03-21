@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 
-@CrossOrigin(origins = ["http://localhost:3000"]) // Permite chamadas do frontend
+@CrossOrigin(origins = ["https://frontend-consultas-odonto.vercel.app/"]) // Permite chamadas do frontend
 @RestController
 @RequestMapping("/pacientes")
 class PacienteController(

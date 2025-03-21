@@ -4,8 +4,11 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class ConsultaDTO(
-    val id: UUID? = null,
-    val pacienteId: UUID,
+    val id: UUID?,
+    val pacienteCpf: String,
+    val pacienteNome: String,
     val dentistaId: UUID,
+    val dentistaNome: String,
     val dataHora: LocalDateTime
 )
+

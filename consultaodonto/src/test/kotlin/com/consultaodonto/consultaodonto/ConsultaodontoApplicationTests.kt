@@ -8,6 +8,7 @@ class ConsultaodontoApplicationTests {
 
 	@Test
 	fun contextLoads() {
+
 	}
 
 }
